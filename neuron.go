@@ -1,13 +1,9 @@
 package krang
 
 import (
+	//"fmt"
 	"math"
 	"math/rand"
-)
-
-const (
-	ETA   float64 = .15
-	ALPHA         = 0.5
 )
 
 type synapse struct {
@@ -58,7 +54,7 @@ func activationFunctionDerivative(x float64) float64 {
 
 /* Neuron Feed Forward */
 func (kNeuron *neuron) feedForward(prevLayer layer) {
-	var sum float64
+	var sum float64 = 0.0
 
 	// Sum the values of the previous layer's neurons, including
 	// the bias neuron
@@ -96,7 +92,10 @@ func (kNeuron *neuron) updateInputWeights(prevLayer layer) {
 		tNeuron := prevLayer[n]
 		oldDeltaWeight := tNeuron.synapses[kNeuron.id].deltaWeight
 
-		newDeltaWeight := ETA*tNeuron.value*kNeuron.gradient + ALPHA*oldDeltaWeight
+		newDeltaWeight := n_eta*
+			tNeuron.value*
+			kNeuron.gradient +
+			n_alpha*oldDeltaWeight
 
 		tNeuron.synapses[kNeuron.id].deltaWeight = newDeltaWeight
 		tNeuron.synapses[kNeuron.id].weight += newDeltaWeight
